@@ -7,12 +7,12 @@ Create and review fictional u-sim Suite scenarios with an agent that supports th
 Run in your project directory with Node.js and npm installed. Choose your agent and one or both skills:
 
 ```sh
-npx skills add thame/usim-agent-skills
+npx skills add u-sim-org/agent-skills
 ```
 
 Or paste this into your agent:
 
-> Install the u-sim scenario authoring and scenario review skills from https://github.com/thame/usim-agent-skills for this agent. Use this project's skill scope. If you have a terminal, run npx skills add thame/usim-agent-skills and select this agent and both skills. Otherwise, read the repository's installation instructions and tell me the supported next step.
+> Install the u-sim scenario authoring and scenario review skills from https://github.com/u-sim-org/agent-skills for this agent. Use this project's skill scope. If you have a terminal, run npx skills add u-sim-org/agent-skills and select this agent and both skills. Otherwise, read the repository's installation instructions and tell me the supported next step.
 
 The [skills CLI](https://skills.sh/docs/cli) supports agents including Claude Code, Codex, Cursor, and GitHub Copilot. Installation depends on your agent's capabilities; a chat-only interface may require a manual upload.
 
