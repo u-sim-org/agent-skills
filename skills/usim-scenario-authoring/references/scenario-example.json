@@ -1,0 +1,176 @@
+{
+  "metadata": {
+    "title": "A clear handoff",
+    "description": "Fictional team communication practice with a delayed result and two approaches to clarifying the situation.",
+    "author": "u-sim example team",
+    "diagnosis": "Communication rehearsal",
+    "specialty": "Simulation education",
+    "level": "Intermediate",
+    "durationMinutes": 10
+  },
+  "patients": {
+    "name": "Alex Morgan (fictional)",
+    "context": "A fictional adult is awaiting handoff. The incoming team needs a shared understanding of the situation and who will follow up an outstanding result.",
+    "demographics": {
+      "age": 40,
+      "gender": "Not specified",
+      "weightKg": 70,
+      "heightCm": 170
+    },
+    "history": {
+      "chiefComplaint": "Awaiting a team handoff",
+      "presentIllness": "The current care summary is incomplete in this fictional exercise.",
+      "medical": [
+        "No additional history authored"
+      ],
+      "surgical": [],
+      "medications": [],
+      "allergies": [
+        {
+          "substance": "Example substance",
+          "reaction": "Authored rash",
+          "severity": "mild"
+        }
+      ],
+      "family": "Not part of this exercise",
+      "social": "Fictional training context",
+      "ros": {
+        "general": "No additional symptoms authored"
+      }
+    },
+    "examination": {
+      "general": "Comfortable and speaking with the team"
+    },
+    "monitor": {
+      "connections": {}
+    },
+    "vitals": {
+      "hr": 80,
+      "sbp": 120,
+      "dbp": 75,
+      "rr": 16,
+      "spo2": 98,
+      "temperature": 37,
+      "etco2": 35
+    }
+  },
+  "environment": {
+    "setting": "A simulated handoff space",
+    "requirements": [
+      "Facilitator brief reviewed",
+      "Learner roles assigned"
+    ],
+    "equipment": [
+      "Handoff note"
+    ],
+    "actors": [
+      {
+        "id": "outgoing-team",
+        "name": "Outgoing colleague",
+        "role": "Facilitator",
+        "brief": "Reveal missing context when the learner asks a focused question."
+      }
+    ]
+  },
+  "education": {
+    "objectives": [
+      "Clarify missing information",
+      "Agree on ownership of the next step"
+    ],
+    "debrief": "How did you establish a shared understanding? Who took responsibility for the outstanding result?",
+    "audience": "Interprofessional learners",
+    "prerequisites": "Familiarity with a local handoff framework",
+    "rationale": "Practice explicit communication and follow-up ownership."
+  },
+  "events": {
+    "states": [
+      {
+        "id": "baseline",
+        "title": "Receive the handoff",
+        "kind": "baseline",
+        "key": true,
+        "learnerNote": "The outgoing colleague is ready. How will you establish the shared picture?",
+        "tutorNote": "Offer incomplete context, then respond to the learner’s approach."
+      },
+      {
+        "id": "assessment",
+        "title": "Clarify the context",
+        "kind": "triggered",
+        "key": true,
+        "learnerNote": "You have clarified the missing information. Agree on the next step.",
+        "tutorNote": "Ask the learner to make ownership explicit."
+      },
+      {
+        "id": "waiting",
+        "title": "Await the update",
+        "kind": "triggered",
+        "learnerNote": "A result is pending. Agree who will review it while the simulated clock advances.",
+        "tutorNote": "Advance simulated time to allow the update."
+      },
+      {
+        "id": "update",
+        "title": "The update arrives",
+        "kind": "scheduled",
+        "learnerNote": "The pending update is available. Confirm who will communicate the result.",
+        "tutorNote": "Ask for a closed-loop confirmation.",
+        "vitals": {
+          "hr": 82
+        }
+      },
+      {
+        "id": "conclusion",
+        "title": "Handoff complete",
+        "kind": "conclusion",
+        "key": true,
+        "learnerNote": "The team has confirmed the situation and the next step. Pause for reflection.",
+        "tutorNote": "Use the debrief prompts to compare both approaches."
+      }
+    ],
+    "actions": [
+      {
+        "id": "clarify",
+        "label": "Ask for missing context",
+        "from": "baseline",
+        "to": "assessment"
+      },
+      {
+        "id": "review",
+        "label": "Review the summary and pending result",
+        "from": "baseline",
+        "to": "waiting",
+        "objectId": "handoff-result"
+      },
+      {
+        "id": "update-due",
+        "label": "Receive the scheduled update",
+        "from": "waiting",
+        "to": "update",
+        "trigger": "scheduled",
+        "delaySeconds": 30
+      },
+      {
+        "id": "confirm",
+        "label": "Confirm responsibilities with a read-back",
+        "from": "assessment",
+        "to": "conclusion"
+      },
+      {
+        "id": "close",
+        "label": "Confirm who will communicate the result",
+        "from": "update",
+        "to": "conclusion"
+      }
+    ],
+    "objects": [
+      {
+        "id": "handoff-result",
+        "type": "information",
+        "name": "Pending handoff update",
+        "description": "A fictional delayed update used to rehearse follow-up ownership.",
+        "result": "The requested handoff information is now available. Confirm that the incoming colleague has received it.",
+        "delaySeconds": 30,
+        "source": "Authored fictional documentation example"
+      }
+    ]
+  }
+}

@@ -1,0 +1,1620 @@
+[
+  {
+    "path": "metadata",
+    "title": "metadata",
+    "type": "object",
+    "required": true
+  },
+  {
+    "path": "metadata.title",
+    "title": "Title",
+    "type": "string",
+    "required": true,
+    "maxLength": 160
+  },
+  {
+    "path": "metadata.description",
+    "title": "Description",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "metadata.author",
+    "title": "Author",
+    "type": "string",
+    "required": true,
+    "maxLength": 160
+  },
+  {
+    "path": "metadata.diagnosis",
+    "title": "Diagnosis or case theme",
+    "type": "string",
+    "required": false,
+    "editor": "diagnosis",
+    "maxLength": 1000
+  },
+  {
+    "path": "metadata.specialty",
+    "title": "Specialty",
+    "type": "string",
+    "required": false,
+    "editor": "specialty",
+    "maxLength": 1000
+  },
+  {
+    "path": "metadata.level",
+    "title": "Learner level",
+    "type": "string",
+    "required": false,
+    "editor": "level",
+    "maxLength": 1000
+  },
+  {
+    "path": "metadata.durationMinutes",
+    "title": "Suggested duration · minutes",
+    "type": "number",
+    "required": false,
+    "minimum": 1,
+    "maximum": 1440,
+    "unit": "min"
+  },
+  {
+    "path": "patients",
+    "title": "patients",
+    "type": "object",
+    "required": true
+  },
+  {
+    "path": "patients.name",
+    "title": "Patient name",
+    "type": "string",
+    "required": true,
+    "maxLength": 160
+  },
+  {
+    "path": "patients.context",
+    "title": "Patient context",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "patients.photo",
+    "title": "Patient photo",
+    "type": "object",
+    "required": false,
+    "editor": "patient-photo"
+  },
+  {
+    "path": "patients.photo.dataUrl",
+    "title": "Photo",
+    "type": "string",
+    "required": true,
+    "maxLength": 12582912
+  },
+  {
+    "path": "patients.photo.description",
+    "title": "Photo description",
+    "type": "string",
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "path": "patients.demographics",
+    "title": "Demographics",
+    "type": "object",
+    "required": false,
+    "editor": "demographics"
+  },
+  {
+    "path": "patients.demographics.age",
+    "title": "Age · years",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 150,
+    "unit": "years"
+  },
+  {
+    "path": "patients.demographics.weightKg",
+    "title": "Weight · kg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "kg"
+  },
+  {
+    "path": "patients.demographics.heightCm",
+    "title": "Height · cm",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 400,
+    "unit": "cm"
+  },
+  {
+    "path": "patients.demographics.gender",
+    "title": "Gender",
+    "type": "string",
+    "required": false,
+    "editor": "gender",
+    "maxLength": 160
+  },
+  {
+    "path": "patients.demographics.heightUnit",
+    "title": "Height display unit",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "patients.demographics.weightUnit",
+    "title": "Weight display unit",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "patients.history",
+    "title": "History",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "patients.history.chiefComplaint",
+    "title": "Chief complaint",
+    "type": "string",
+    "required": false,
+    "maxLength": 8000
+  },
+  {
+    "path": "patients.history.presentIllness",
+    "title": "History of present illness",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "patients.history.medical",
+    "title": "Medical history / comorbidities",
+    "type": "array",
+    "required": false,
+    "maxItems": 64
+  },
+  {
+    "path": "patients.history.medical.*",
+    "title": "Item",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "patients.history.surgical",
+    "title": "Surgical history",
+    "type": "array",
+    "required": false,
+    "maxItems": 64
+  },
+  {
+    "path": "patients.history.surgical.*",
+    "title": "Item",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "patients.history.medications",
+    "title": "Home medications",
+    "type": "array",
+    "required": false,
+    "maxItems": 64
+  },
+  {
+    "path": "patients.history.medications.*",
+    "title": "Item",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "patients.history.allergies",
+    "title": "Allergies",
+    "type": "array",
+    "required": false,
+    "editor": "allergies",
+    "maxItems": 64
+  },
+  {
+    "path": "patients.history.allergies.*",
+    "title": "*",
+    "type": "union",
+    "required": false
+  },
+  {
+    "path": "patients.history.allergies.*.substance",
+    "title": "Substance",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "patients.history.allergies.*.reaction",
+    "title": "Reaction",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "patients.history.allergies.*.severity",
+    "title": "Severity",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "patients.history.family",
+    "title": "Family history",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "patients.history.social",
+    "title": "Social history",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "patients.history.ros",
+    "title": "Review of systems",
+    "type": "object",
+    "required": false,
+    "editor": "ros"
+  },
+  {
+    "path": "patients.examination",
+    "title": "Examination",
+    "type": "object",
+    "required": false,
+    "editor": "examination"
+  },
+  {
+    "path": "patients.monitor",
+    "title": "Monitor",
+    "type": "object",
+    "required": false,
+    "editor": "monitor"
+  },
+  {
+    "path": "patients.monitor.rhythm",
+    "title": "Monitor rhythm",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.pulsePresent",
+    "title": "Pulse present",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections",
+    "title": "Monitor connections",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.ecg",
+    "title": "ECG",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.bloodPressure",
+    "title": "Blood pressure cuff",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.spo2",
+    "title": "Pulse oximetry",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.respiration",
+    "title": "Respiratory monitoring",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.temperature",
+    "title": "Temperature probe",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.capnography",
+    "title": "Capnography",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.monitor.connections.arterialPressure",
+    "title": "Arterial pressure",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "patients.vitals",
+    "title": "Vital signs",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "patients.vitals.hr",
+    "title": "Heart rate · bpm",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "beats/min"
+  },
+  {
+    "path": "patients.vitals.sbp",
+    "title": "Systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "patients.vitals.dbp",
+    "title": "Diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "patients.vitals.rr",
+    "title": "Respiratory rate · /min",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "breaths/min"
+  },
+  {
+    "path": "patients.vitals.spo2",
+    "title": "Oxygen saturation · %",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 100,
+    "unit": "%"
+  },
+  {
+    "path": "patients.vitals.temperature",
+    "title": "Temperature · °C",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "Cel"
+  },
+  {
+    "path": "patients.vitals.etco2",
+    "title": "End-tidal CO₂ · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "patients.vitals.artSbp",
+    "title": "Arterial systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "patients.vitals.artDbp",
+    "title": "Arterial diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "environment",
+    "title": "environment",
+    "type": "object",
+    "required": true
+  },
+  {
+    "path": "environment.setting",
+    "title": "Setting",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 2000
+  },
+  {
+    "path": "environment.requirements",
+    "title": "Preparation requirements",
+    "type": "array",
+    "required": true,
+    "maxItems": 32
+  },
+  {
+    "path": "environment.requirements.*",
+    "title": "Requirement",
+    "type": "string",
+    "required": false,
+    "maxLength": 240
+  },
+  {
+    "path": "environment.equipment",
+    "title": "Equipment",
+    "type": "array",
+    "required": false,
+    "maxItems": 64
+  },
+  {
+    "path": "environment.equipment.*",
+    "title": "Item",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "environment.actors",
+    "title": "Scenario actors",
+    "type": "array",
+    "required": false,
+    "maxItems": 32
+  },
+  {
+    "path": "environment.actors.*",
+    "title": "Actor",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "environment.actors.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "environment.actors.*.name",
+    "title": "Actor name",
+    "type": "string",
+    "required": true,
+    "maxLength": 160
+  },
+  {
+    "path": "environment.actors.*.role",
+    "title": "Actor role",
+    "type": "string",
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "path": "environment.actors.*.brief",
+    "title": "Actor brief",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "environment.actors.*.demographics",
+    "title": "Voice demographics",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "environment.actors.*.demographics.age",
+    "title": "Age · years",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 150,
+    "unit": "years"
+  },
+  {
+    "path": "environment.actors.*.demographics.gender",
+    "title": "Gender",
+    "type": "string",
+    "required": false,
+    "editor": "gender",
+    "maxLength": 160
+  },
+  {
+    "path": "environment.patientScene",
+    "title": "Patient scene",
+    "type": "object",
+    "required": false,
+    "editor": "scene"
+  },
+  {
+    "path": "environment.patientScene.modelUrl",
+    "title": "Patient model URL",
+    "type": "string",
+    "required": true,
+    "maxLength": 2000
+  },
+  {
+    "path": "environment.patientScene.attribution",
+    "title": "Model attribution",
+    "type": "string",
+    "required": true,
+    "maxLength": 2000
+  },
+  {
+    "path": "environment.patientScene.markers",
+    "title": "markers",
+    "type": "array",
+    "required": true,
+    "maxItems": 128
+  },
+  {
+    "path": "environment.patientScene.markers.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "environment.patientScene.markers.*.actionId",
+    "title": "Marker action",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "environment.patientScene.markers.*.position",
+    "title": "position",
+    "type": "string",
+    "required": true,
+    "maxLength": 160
+  },
+  {
+    "path": "environment.patientScene.markers.*.normal",
+    "title": "normal",
+    "type": "string",
+    "required": true,
+    "maxLength": 160
+  },
+  {
+    "path": "education",
+    "title": "education",
+    "type": "object",
+    "required": true
+  },
+  {
+    "path": "education.objectives",
+    "title": "Learning objectives",
+    "type": "array",
+    "required": true,
+    "editor": "objectives",
+    "maxItems": 32
+  },
+  {
+    "path": "education.objectives.*",
+    "title": "*",
+    "type": "union",
+    "required": false
+  },
+  {
+    "path": "education.objectives.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "education.objectives.*.statement",
+    "title": "Learning objective",
+    "type": "string",
+    "required": false,
+    "maxLength": 1000
+  },
+  {
+    "path": "education.objectives.*.acgmeCompetencies",
+    "title": "ACGME core competencies",
+    "type": "array",
+    "required": false,
+    "maxItems": 6
+  },
+  {
+    "path": "education.objectives.*.acgmeCompetencies.*",
+    "title": "ACGME core competency",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "education.debrief",
+    "title": "Debrief prompts",
+    "type": "string",
+    "required": true,
+    "editor": "markdown",
+    "maxLength": 12000
+  },
+  {
+    "path": "education.audience",
+    "title": "Intended audience",
+    "type": "string",
+    "required": false,
+    "maxLength": 8000
+  },
+  {
+    "path": "education.prerequisites",
+    "title": "Prerequisites",
+    "type": "string",
+    "required": false,
+    "editor": "markdown",
+    "maxLength": 8000
+  },
+  {
+    "path": "education.prerequisiteDocuments",
+    "title": "Prerequisite documents",
+    "type": "array",
+    "required": false,
+    "editor": "prerequisite-documents",
+    "maxItems": 8
+  },
+  {
+    "path": "education.prerequisiteDocuments.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "education.prerequisiteDocuments.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "education.prerequisiteDocuments.*.name",
+    "title": "Document name",
+    "type": "string",
+    "required": true,
+    "maxLength": 255
+  },
+  {
+    "path": "education.prerequisiteDocuments.*.dataUrl",
+    "title": "Document",
+    "type": "string",
+    "required": true,
+    "maxLength": 6990668
+  },
+  {
+    "path": "education.rationale",
+    "title": "Educational rationale",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "education.assessment",
+    "title": "Assessment & learning materials",
+    "type": "array",
+    "required": false,
+    "editor": "assessment",
+    "maxItems": 64
+  },
+  {
+    "path": "education.assessment.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "education.assessment.*.objectiveId",
+    "title": "Learning objective",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "education.assessment.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "education.assessment.*.label",
+    "title": "Skill or objective",
+    "type": "string",
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "path": "education.assessment.*.actionId",
+    "title": "Required action",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "education.assessment.*.objectId",
+    "title": "Equivalent resource",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "education.assessment.*.objectIds",
+    "title": "Equivalent resources",
+    "type": "array",
+    "required": false,
+    "maxItems": 1000
+  },
+  {
+    "path": "education.assessment.*.objectIds.*",
+    "title": "Equivalent resource",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "education.assessment.*.points",
+    "title": "Points",
+    "type": "number",
+    "required": true,
+    "minimum": 1,
+    "maximum": 100
+  },
+  {
+    "path": "education.assessment.*.withinSeconds",
+    "title": "Deadline · seconds",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 86400,
+    "unit": "s"
+  },
+  {
+    "path": "education.assessment.*.feedback",
+    "title": "Debrief guidance",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "education.assessment.*.learningUrl",
+    "title": "Learning material URL",
+    "type": "string",
+    "required": false,
+    "maxLength": 2000
+  },
+  {
+    "path": "events",
+    "title": "events",
+    "type": "object",
+    "required": true
+  },
+  {
+    "path": "events.states",
+    "title": "States",
+    "type": "array",
+    "required": true,
+    "editor": "graph",
+    "maxItems": 128
+  },
+  {
+    "path": "events.states.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.states.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "events.states.*.title",
+    "title": "State title",
+    "type": "string",
+    "required": true,
+    "maxLength": 240
+  },
+  {
+    "path": "events.states.*.kind",
+    "title": "State kind",
+    "type": "string",
+    "required": true
+  },
+  {
+    "path": "events.states.*.learnerNote",
+    "title": "Learner prompt",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "events.states.*.tutorNote",
+    "title": "Tutor prompt",
+    "type": "string",
+    "required": true,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "events.states.*.vitals",
+    "title": "Vital signs",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.states.*.vitals.hr",
+    "title": "Heart rate · bpm",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "beats/min"
+  },
+  {
+    "path": "events.states.*.vitals.sbp",
+    "title": "Systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.states.*.vitals.dbp",
+    "title": "Diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.states.*.vitals.rr",
+    "title": "Respiratory rate · /min",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "breaths/min"
+  },
+  {
+    "path": "events.states.*.vitals.spo2",
+    "title": "Oxygen saturation · %",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 100,
+    "unit": "%"
+  },
+  {
+    "path": "events.states.*.vitals.temperature",
+    "title": "Temperature · °C",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "Cel"
+  },
+  {
+    "path": "events.states.*.vitals.etco2",
+    "title": "End-tidal CO₂ · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.states.*.vitals.artSbp",
+    "title": "Arterial systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.states.*.vitals.artDbp",
+    "title": "Arterial diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.states.*.vitalTrendSeconds",
+    "title": "Vital trend · seconds",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 86400,
+    "unit": "s"
+  },
+  {
+    "path": "events.states.*.monitor",
+    "title": "Monitor",
+    "type": "object",
+    "required": false,
+    "editor": "monitor"
+  },
+  {
+    "path": "events.states.*.monitor.rhythm",
+    "title": "Monitor rhythm",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.pulsePresent",
+    "title": "Pulse present",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections",
+    "title": "Monitor connections",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.ecg",
+    "title": "ECG",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.bloodPressure",
+    "title": "Blood pressure cuff",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.spo2",
+    "title": "Pulse oximetry",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.respiration",
+    "title": "Respiratory monitoring",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.temperature",
+    "title": "Temperature probe",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.capnography",
+    "title": "Capnography",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.monitor.connections.arterialPressure",
+    "title": "Arterial pressure",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.key",
+    "title": "Key state",
+    "type": "boolean",
+    "required": false
+  },
+  {
+    "path": "events.states.*.resourceTrigger",
+    "title": "Enter when resource results are available",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.states.*.resourceTrigger.mode",
+    "title": "Results required",
+    "type": "string",
+    "required": true
+  },
+  {
+    "path": "events.states.*.resourceTrigger.objectIds",
+    "title": "Selected resources",
+    "type": "array",
+    "required": true,
+    "maxItems": 1000
+  },
+  {
+    "path": "events.states.*.resourceTrigger.objectIds.*",
+    "title": "Resource",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions",
+    "title": "Interactions",
+    "type": "array",
+    "required": true,
+    "maxItems": 512
+  },
+  {
+    "path": "events.actions.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.actions.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions.*.label",
+    "title": "Interaction",
+    "type": "string",
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "path": "events.actions.*.description",
+    "title": "Description",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 6000
+  },
+  {
+    "path": "events.actions.*.from",
+    "title": "From state",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions.*.to",
+    "title": "Leads to",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions.*.trigger",
+    "title": "Trigger",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "events.actions.*.delaySeconds",
+    "title": "Delay · seconds",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 86400,
+    "unit": "s"
+  },
+  {
+    "path": "events.actions.*.objectId",
+    "title": "Linked resource",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions.*.completionCriteria",
+    "title": "When this action is complete",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 6000
+  },
+  {
+    "path": "events.actions.*.completion",
+    "title": "Action recognition",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.actions.*.completion.mode",
+    "title": "Resources required",
+    "type": "string",
+    "required": true
+  },
+  {
+    "path": "events.actions.*.completion.objectIds",
+    "title": "Recognize resource interactions",
+    "type": "array",
+    "required": true,
+    "maxItems": 1000
+  },
+  {
+    "path": "events.actions.*.completion.objectIds.*",
+    "title": "Resource",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions.*.cancelOnActionIds",
+    "title": "Cancel when action completes",
+    "type": "array",
+    "required": false,
+    "maxItems": 1000
+  },
+  {
+    "path": "events.actions.*.cancelOnActionIds.*",
+    "title": "Completed action",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "events.actions.*.effects",
+    "title": "Vital signs",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.actions.*.effects.hr",
+    "title": "Heart rate · bpm",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "beats/min"
+  },
+  {
+    "path": "events.actions.*.effects.sbp",
+    "title": "Systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.actions.*.effects.dbp",
+    "title": "Diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.actions.*.effects.rr",
+    "title": "Respiratory rate · /min",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "breaths/min"
+  },
+  {
+    "path": "events.actions.*.effects.spo2",
+    "title": "Oxygen saturation · %",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 100,
+    "unit": "%"
+  },
+  {
+    "path": "events.actions.*.effects.temperature",
+    "title": "Temperature · °C",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "Cel"
+  },
+  {
+    "path": "events.actions.*.effects.etco2",
+    "title": "End-tidal CO₂ · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.actions.*.effects.artSbp",
+    "title": "Arterial systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.actions.*.effects.artDbp",
+    "title": "Arterial diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects",
+    "title": "Resources",
+    "type": "array",
+    "required": false,
+    "editor": "resources",
+    "maxItems": 2048
+  },
+  {
+    "path": "events.objects.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.id",
+    "title": "Identifier",
+    "type": "string",
+    "required": true,
+    "maxLength": 128
+  },
+  {
+    "path": "events.objects.*.type",
+    "title": "Resource type",
+    "type": "string",
+    "required": true
+  },
+  {
+    "path": "events.objects.*.name",
+    "title": "Resource name",
+    "type": "string",
+    "required": true,
+    "maxLength": 240
+  },
+  {
+    "path": "events.objects.*.diagnosticCategory",
+    "title": "Diagnostic category",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.description",
+    "title": "Description shown to the learner",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 8000
+  },
+  {
+    "path": "events.objects.*.result",
+    "title": "Learner result",
+    "type": "string",
+    "required": false,
+    "editor": "textarea",
+    "maxLength": 12000
+  },
+  {
+    "path": "events.objects.*.labResults",
+    "title": "Lab results",
+    "type": "array",
+    "required": false,
+    "maxItems": 64
+  },
+  {
+    "path": "events.objects.*.labResults.*",
+    "title": "*",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.labResults.*.name",
+    "title": "Test",
+    "type": "string",
+    "required": true,
+    "maxLength": 120
+  },
+  {
+    "path": "events.objects.*.labResults.*.value",
+    "title": "Value",
+    "type": "string",
+    "required": true,
+    "maxLength": 80
+  },
+  {
+    "path": "events.objects.*.labResults.*.unit",
+    "title": "Unit",
+    "type": "string",
+    "required": true,
+    "maxLength": 80
+  },
+  {
+    "path": "events.objects.*.image",
+    "title": "Image",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.image.dataUrl",
+    "title": "Image",
+    "type": "string",
+    "required": true,
+    "maxLength": 12582912
+  },
+  {
+    "path": "events.objects.*.image.description",
+    "title": "Image description",
+    "type": "string",
+    "required": true,
+    "maxLength": 1000
+  },
+  {
+    "path": "events.objects.*.releaseOnStateId",
+    "title": "Release result",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "events.objects.*.delaySeconds",
+    "title": "Response delay · seconds",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 86400,
+    "unit": "s"
+  },
+  {
+    "path": "events.objects.*.effects",
+    "title": "Vital signs",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.effects.hr",
+    "title": "Heart rate · bpm",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "beats/min"
+  },
+  {
+    "path": "events.objects.*.effects.sbp",
+    "title": "Systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.effects.dbp",
+    "title": "Diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.effects.rr",
+    "title": "Respiratory rate · /min",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "breaths/min"
+  },
+  {
+    "path": "events.objects.*.effects.spo2",
+    "title": "Oxygen saturation · %",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 100,
+    "unit": "%"
+  },
+  {
+    "path": "events.objects.*.effects.temperature",
+    "title": "Temperature · °C",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "Cel"
+  },
+  {
+    "path": "events.objects.*.effects.etco2",
+    "title": "End-tidal CO₂ · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.effects.artSbp",
+    "title": "Arterial systolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.effects.artDbp",
+    "title": "Arterial diastolic BP · mmHg",
+    "type": "number",
+    "required": false,
+    "minimum": 0,
+    "maximum": 1000,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.advanceToStateId",
+    "title": "Destination event",
+    "type": "string",
+    "required": false,
+    "maxLength": 128
+  },
+  {
+    "path": "events.objects.*.effectPercent",
+    "title": "effectPercent",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.effectPercent.hr",
+    "title": "hr",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.sbp",
+    "title": "sbp",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.dbp",
+    "title": "dbp",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.rr",
+    "title": "rr",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.spo2",
+    "title": "spo2",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.temperature",
+    "title": "temperature",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.etco2",
+    "title": "etco2",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.artSbp",
+    "title": "artSbp",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.effectPercent.artDbp",
+    "title": "artDbp",
+    "type": "number",
+    "required": false,
+    "minimum": -100,
+    "maximum": 1000
+  },
+  {
+    "path": "events.objects.*.monitorConnection",
+    "title": "Monitor connection",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.monitorConnection.channel",
+    "title": "Monitor channel",
+    "type": "string",
+    "required": true
+  },
+  {
+    "path": "events.objects.*.monitorConnection.connected",
+    "title": "Connected",
+    "type": "boolean",
+    "required": true
+  },
+  {
+    "path": "events.objects.*.orthostaticResponse",
+    "title": "Orthostatic BP response",
+    "type": "object",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.orthostaticResponse.systolicDrop",
+    "title": "Systolic drop · mmHg",
+    "type": "number",
+    "required": true,
+    "minimum": 0,
+    "maximum": 100,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.orthostaticResponse.diastolicDrop",
+    "title": "Diastolic drop · mmHg",
+    "type": "number",
+    "required": true,
+    "minimum": 0,
+    "maximum": 100,
+    "unit": "mmHg"
+  },
+  {
+    "path": "events.objects.*.medicationResponse",
+    "title": "Medication response preset",
+    "type": "string",
+    "required": false
+  },
+  {
+    "path": "events.objects.*.source",
+    "title": "Source / attribution",
+    "type": "string",
+    "required": false,
+    "maxLength": 2000
+  }
+]

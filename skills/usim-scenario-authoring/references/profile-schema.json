@@ -1,0 +1,1888 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://u-sim.app/schemas/suite/3.1.0/scenario.json",
+  "title": "u-sim Suite scenario",
+  "additionalProperties": false,
+  "type": "object",
+  "required": [
+    "metadata",
+    "patients",
+    "environment",
+    "education",
+    "events"
+  ],
+  "properties": {
+    "metadata": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "title",
+        "description",
+        "author"
+      ],
+      "properties": {
+        "title": {
+          "title": "Title",
+          "maxLength": 160,
+          "type": "string",
+          "description": "A concise case title that helps authors and learners identify this scenario."
+        },
+        "description": {
+          "title": "Description",
+          "maxLength": 8000,
+          "type": "string",
+          "description": "The scenario premise, scope, and intended learning activity."
+        },
+        "author": {
+          "title": "Author",
+          "maxLength": 160,
+          "type": "string",
+          "description": "The person or team credited with creating this scenario."
+        },
+        "diagnosis": {
+          "title": "Diagnosis or case theme",
+          "maxLength": 1000,
+          "type": "string",
+          "description": "The main diagnosis or case theme that guides the scenario."
+        },
+        "specialty": {
+          "title": "Specialty",
+          "maxLength": 1000,
+          "type": "string",
+          "description": "The clinical specialty or specialties relevant to this scenario."
+        },
+        "level": {
+          "title": "Learner level",
+          "maxLength": 1000,
+          "type": "string",
+          "description": "The intended learner level and experience."
+        },
+        "durationMinutes": {
+          "title": "Suggested duration · minutes",
+          "minimum": 1,
+          "maximum": 1440,
+          "type": "number",
+          "description": "The suggested scenario duration in minutes; this does not control the simulation clock."
+        }
+      },
+      "description": "Case identification, authorship, and the teaching context used to find and select this scenario."
+    },
+    "patients": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "name",
+        "context"
+      ],
+      "properties": {
+        "name": {
+          "title": "Patient name",
+          "maxLength": 160,
+          "type": "string",
+          "description": "The fictional patient's display name."
+        },
+        "context": {
+          "title": "Patient context",
+          "maxLength": 8000,
+          "type": "string",
+          "description": "The patient's opening situation and the context available at the start of the scenario."
+        },
+        "photo": {
+          "title": "Patient photo",
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "dataUrl",
+            "description"
+          ],
+          "properties": {
+            "dataUrl": {
+              "title": "Photo",
+              "maxLength": 12582912,
+              "type": "string",
+              "description": "The patient photo encoded as a data URL. Use the photo upload control to populate it."
+            },
+            "description": {
+              "title": "Photo description",
+              "maxLength": 1000,
+              "type": "string",
+              "description": "Describe the patient's appearance for readers who cannot see the photo."
+            }
+          },
+          "description": "An optional embedded patient photo that travels with the scenario. Upload a PNG, JPEG, or WebP image."
+        },
+        "demographics": {
+          "title": "Demographics",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "age": {
+              "title": "Age · years",
+              "minimum": 0,
+              "maximum": 150,
+              "type": "number",
+              "description": "Patient age in years. Use the patient narrative to clarify a young infant's age when needed."
+            },
+            "weightKg": {
+              "title": "Weight · kg",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Patient weight, stored in kilograms. The editor can also display pounds."
+            },
+            "heightCm": {
+              "title": "Height · cm",
+              "minimum": 0,
+              "maximum": 400,
+              "type": "number",
+              "description": "Patient height, stored in centimeters. The editor can also display feet and inches."
+            },
+            "gender": {
+              "title": "Gender",
+              "maxLength": 160,
+              "type": "string",
+              "description": "The patient's authored gender description."
+            },
+            "heightUnit": {
+              "type": "string",
+              "title": "Height display unit",
+              "enum": [
+                "cm",
+                "in",
+                "ft-in"
+              ],
+              "description": "Preferred height display unit in the scenario editor; the measurement remains stored in centimeters."
+            },
+            "weightUnit": {
+              "type": "string",
+              "title": "Weight display unit",
+              "enum": [
+                "kg",
+                "lb"
+              ],
+              "description": "Preferred weight display unit in the scenario editor; the measurement remains stored in kilograms."
+            }
+          },
+          "description": "Patient age, gender, height, and weight used to describe the case."
+        },
+        "history": {
+          "title": "History",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "chiefComplaint": {
+              "title": "Chief complaint",
+              "maxLength": 8000,
+              "type": "string",
+              "description": "The main symptom or concern prompting care, ideally in the patient's own words. This is the scenario title shown to learners."
+            },
+            "presentIllness": {
+              "title": "History of present illness",
+              "maxLength": 8000,
+              "type": "string",
+              "description": "Describe symptom onset, progression, associated symptoms, relevant negatives, and treatment before arrival."
+            },
+            "medical": {
+              "title": "Medical history / comorbidities",
+              "maxItems": 64,
+              "type": "array",
+              "items": {
+                "title": "Item",
+                "maxLength": 1000,
+                "type": "string",
+                "description": "One prior diagnosis or ongoing condition, with relevant severity or treatment."
+              },
+              "description": "Relevant diagnoses and comorbidities, one condition per entry. Include details that affect decisions in this case."
+            },
+            "surgical": {
+              "title": "Surgical history",
+              "maxItems": 64,
+              "type": "array",
+              "items": {
+                "title": "Item",
+                "maxLength": 1000,
+                "type": "string",
+                "description": "One previous operation or procedure, including its approximate date and relevant outcome."
+              },
+              "description": "Previous operations or procedures relevant to the case, with timing and complications when useful."
+            },
+            "medications": {
+              "title": "Home medications",
+              "maxItems": 64,
+              "type": "array",
+              "items": {
+                "title": "Item",
+                "maxLength": 1000,
+                "type": "string",
+                "description": "One home medication, using its generic name and relevant dose, route, and frequency."
+              },
+              "description": "Medications taken before this encounter. Include dose, route, frequency, and adherence when relevant."
+            },
+            "allergies": {
+              "title": "Allergies",
+              "maxItems": 64,
+              "type": "array",
+              "items": {
+                "anyOf": [
+                  {
+                    "maxLength": 1000,
+                    "description": "A concise allergy history entry naming the substance and known reaction, or explicitly stating no known allergies or unknown history.",
+                    "type": "string"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "type": "object",
+                    "required": [
+                      "substance"
+                    ],
+                    "properties": {
+                      "substance": {
+                        "title": "Substance",
+                        "maxLength": 1000,
+                        "type": "string",
+                        "description": "The medication, food, or other substance associated with the allergy."
+                      },
+                      "reaction": {
+                        "title": "Reaction",
+                        "maxLength": 1000,
+                        "type": "string",
+                        "description": "What happened after exposure, such as hives or wheezing. State when the reaction is unknown."
+                      },
+                      "severity": {
+                        "type": "string",
+                        "title": "Severity",
+                        "enum": [
+                          "mild",
+                          "moderate",
+                          "severe",
+                          "unknown"
+                        ],
+                        "description": "The reported severity of the allergic reaction; choose unknown when it has not been established."
+                      }
+                    }
+                  }
+                ],
+                "description": "One allergy as text or as a substance, reaction, and severity record."
+              },
+              "description": "Known allergies and reactions. Distinguish no known allergies from an unknown allergy history."
+            },
+            "family": {
+              "title": "Family history",
+              "maxLength": 8000,
+              "type": "string",
+              "description": "Family conditions or inherited risks relevant to the presentation; include pertinent negative history."
+            },
+            "social": {
+              "title": "Social history",
+              "maxLength": 8000,
+              "type": "string",
+              "description": "Living situation, supports, occupation, exposures, and substance use relevant to care."
+            },
+            "ros": {
+              "title": "Review of systems",
+              "maxProperties": 64,
+              "propertyNames": {
+                "maxLength": 100,
+                "not": {
+                  "enum": [
+                    "__proto__",
+                    "constructor",
+                    "prototype"
+                  ]
+                }
+              },
+              "type": "object",
+              "patternProperties": {
+                "^(.*)$": {
+                  "maxLength": 4000,
+                  "type": "string"
+                }
+              },
+              "description": "Symptoms reported by body system, including relevant positives and negatives. Record examination findings separately."
+            }
+          },
+          "description": "The history available about this patient, including symptoms, background, medications, and allergies."
+        },
+        "examination": {
+          "title": "Examination",
+          "maxProperties": 64,
+          "propertyNames": {
+            "maxLength": 100,
+            "not": {
+              "enum": [
+                "__proto__",
+                "constructor",
+                "prototype"
+              ]
+            }
+          },
+          "type": "object",
+          "patternProperties": {
+            "^(.*)$": {
+              "maxLength": 4000,
+              "type": "string"
+            }
+          },
+          "description": "The physical examination findings available to the learner."
+        },
+        "monitor": {
+          "title": "Monitor",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "rhythm": {
+              "type": "string",
+              "title": "Monitor rhythm",
+              "enum": [
+                "sinus",
+                "sinus_tachycardia",
+                "sinus_bradycardia",
+                "atrial_fibrillation",
+                "atrial_flutter",
+                "svt",
+                "ventricular_tachycardia",
+                "torsades",
+                "ventricular_fibrillation",
+                "asystole",
+                "av_block_1",
+                "av_block_2_mobitz_1",
+                "av_block_2_mobitz_2",
+                "av_block_3",
+                "junctional",
+                "ventricular_paced"
+              ],
+              "description": "The ECG rhythm displayed on the monitor. Select the rhythm separately from whether the patient has a palpable pulse."
+            },
+            "pulsePresent": {
+              "title": "Pulse present",
+              "type": "boolean",
+              "description": "Whether a palpable pulse is present. Use this to distinguish perfusing and pulseless presentations of the displayed rhythm."
+            },
+            "connections": {
+              "title": "Monitor connections",
+              "additionalProperties": false,
+              "type": "object",
+              "properties": {
+                "ecg": {
+                  "title": "ECG",
+                  "type": "boolean",
+                  "description": "ECG: connected exposes the available measurement; disconnected hides it without changing physiology."
+                },
+                "bloodPressure": {
+                  "title": "Blood pressure cuff",
+                  "type": "boolean",
+                  "description": "Blood pressure cuff: connected exposes the available measurement; disconnected hides it without changing physiology."
+                },
+                "spo2": {
+                  "title": "Pulse oximetry",
+                  "type": "boolean",
+                  "description": "Pulse oximetry: connected exposes the available measurement; disconnected hides it without changing physiology."
+                },
+                "respiration": {
+                  "title": "Respiratory monitoring",
+                  "type": "boolean",
+                  "description": "Respiratory monitoring: connected exposes the available measurement; disconnected hides it without changing physiology."
+                },
+                "temperature": {
+                  "title": "Temperature probe",
+                  "type": "boolean",
+                  "description": "Temperature probe: connected exposes the available measurement; disconnected hides it without changing physiology."
+                },
+                "capnography": {
+                  "title": "Capnography",
+                  "type": "boolean",
+                  "description": "Capnography: connected exposes the available measurement; disconnected hides it without changing physiology."
+                },
+                "arterialPressure": {
+                  "title": "Arterial pressure",
+                  "type": "boolean",
+                  "description": "Arterial pressure: connected exposes the available measurement; disconnected hides it without changing physiology."
+                }
+              },
+              "description": "Connected channels expose available measurements without changing physiology. An explicit empty patient connection map starts disconnected. Omitted event channels inherit their preceding connection. Omitting the patient connection map makes available channels connected."
+            }
+          },
+          "description": "The monitor configuration used to present patient observations."
+        },
+        "vitals": {
+          "title": "Vital signs",
+          "additionalProperties": false,
+          "type": "object",
+          "properties": {
+            "hr": {
+              "title": "Heart rate · bpm",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Heart rate in beats per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "sbp": {
+              "title": "Systolic BP · mmHg",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Noninvasive systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "dbp": {
+              "title": "Diastolic BP · mmHg",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Noninvasive diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "rr": {
+              "title": "Respiratory rate · /min",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Respiratory rate in breaths per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "spo2": {
+              "title": "Oxygen saturation · %",
+              "minimum": 0,
+              "maximum": 100,
+              "type": "number",
+              "description": "Peripheral oxygen saturation as a percentage from 0 to 100. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "temperature": {
+              "title": "Temperature · °C",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Body temperature in degrees Celsius. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "etco2": {
+              "title": "End-tidal CO₂ · mmHg",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "End-tidal carbon dioxide pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "artSbp": {
+              "title": "Arterial systolic BP · mmHg",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Invasive arterial systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            },
+            "artDbp": {
+              "title": "Arterial diastolic BP · mmHg",
+              "minimum": 0,
+              "maximum": 1000,
+              "type": "number",
+              "description": "Invasive arterial diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+            }
+          },
+          "description": "Absolute resulting measurements, never signed deltas. Omitted values are unspecified or inherited in an event context. Bounds are storage limits, not clinical reference intervals."
+        }
+      },
+      "description": "The fictional patient's presentation, history, examination, and starting observations."
+    },
+    "environment": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "setting",
+        "requirements"
+      ],
+      "properties": {
+        "setting": {
+          "title": "Setting",
+          "maxLength": 2000,
+          "type": "string",
+          "description": "Where the scenario takes place and the relevant features of the care environment."
+        },
+        "requirements": {
+          "title": "Preparation requirements",
+          "maxItems": 32,
+          "description": "Pre-session tasks for the simulation center, each with a concrete action and setup outcome. Equipment and supplies belong in equipment.",
+          "type": "array",
+          "items": {
+            "title": "Requirement",
+            "maxLength": 240,
+            "type": "string",
+            "description": "One pre-session setup task with a concrete outcome, such as programming initial manikin observations or briefing an actor."
+          }
+        },
+        "equipment": {
+          "title": "Equipment",
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "title": "Item",
+            "maxLength": 1000,
+            "type": "string",
+            "description": "One item of equipment or supplies needed for the session, with configuration or an acceptable substitute when useful."
+          },
+          "description": "The equipment and supplies needed to run the scenario."
+        },
+        "actors": {
+          "title": "Scenario actors",
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "title": "Actor",
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "role",
+              "brief"
+            ],
+            "properties": {
+              "id": {
+                "title": "Identifier",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "A stable identifier used to reference this entry. Keep it unchanged when editing the entry's name or content."
+              },
+              "name": {
+                "title": "Actor name",
+                "maxLength": 160,
+                "type": "string",
+                "description": "The character's name or role-player label used to identify this actor."
+              },
+              "role": {
+                "title": "Actor role",
+                "maxLength": 1000,
+                "type": "string",
+                "description": "The character's relationship to the patient or care team, such as parent, bedside nurse, or consultant."
+              },
+              "brief": {
+                "title": "Actor brief",
+                "maxLength": 8000,
+                "type": "string",
+                "description": "Tell the actor what they know, how to behave, what to disclose, and how to respond to likely learner actions."
+              },
+              "demographics": {
+                "title": "Voice demographics",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "age": {
+                    "title": "Age · years",
+                    "minimum": 0,
+                    "maximum": 150,
+                    "type": "number",
+                    "description": "The character's age in years, used to guide natural voice delivery without exaggeration."
+                  },
+                  "gender": {
+                    "title": "Gender",
+                    "maxLength": 160,
+                    "type": "string",
+                    "description": "The character's authored gender, used for default voice selection. Never inferred from their name or occupation."
+                  }
+                },
+                "description": "Optional authored age and gender for voice casting. Omit unknown details; voice uses a neutral adult default."
+              }
+            },
+            "description": "One role-player's identity, role in the case, and instructions for responding to learners."
+          },
+          "description": "The people portraying scenario roles, with their names, roles, and briefing instructions."
+        },
+        "patientScene": {
+          "title": "Patient scene",
+          "additionalProperties": false,
+          "type": "object",
+          "required": [
+            "modelUrl",
+            "attribution",
+            "markers"
+          ],
+          "properties": {
+            "modelUrl": {
+              "title": "Patient model URL",
+              "minLength": 1,
+              "maxLength": 2000,
+              "type": "string",
+              "description": "The URL of the patient model to load in the 3D scene. Use a model accessible to the simulation viewer."
+            },
+            "attribution": {
+              "title": "Model attribution",
+              "maxLength": 2000,
+              "type": "string",
+              "description": "Credit the model creator and record the source and license or permission to use it."
+            },
+            "markers": {
+              "maxItems": 128,
+              "type": "array",
+              "items": {
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "actionId",
+                  "position",
+                  "normal"
+                ],
+                "properties": {
+                  "actionId": {
+                    "title": "Marker action",
+                    "maxLength": 128,
+                    "minLength": 1,
+                    "pattern": "\\S",
+                    "type": "string",
+                    "description": "The existing learner action to invoke when this hotspot is selected; scheduled transitions cannot be selected."
+                  },
+                  "position": {
+                    "minLength": 1,
+                    "maxLength": 160,
+                    "pattern": "^-?\\d+(?:\\.\\d+)?(?:m)?\\s+-?\\d+(?:\\.\\d+)?(?:m)?\\s+-?\\d+(?:\\.\\d+)?(?:m)?$",
+                    "type": "string",
+                    "description": "Hotspot location as three space-separated model-space coordinates (x y z), for example 0m 1m 0m."
+                  },
+                  "normal": {
+                    "minLength": 1,
+                    "maxLength": 160,
+                    "pattern": "^-?\\d+(?:\\.\\d+)?(?:m)?\\s+-?\\d+(?:\\.\\d+)?(?:m)?\\s+-?\\d+(?:\\.\\d+)?(?:m)?$",
+                    "type": "string",
+                    "description": "Hotspot surface direction as three space-separated vector components (x y z), for example 0 0 1."
+                  }
+                },
+                "description": "One interaction hotspot with an action, a model-space position, and an outward-facing direction."
+              },
+              "description": "Clickable locations on the patient model, each linked to an existing learner interaction."
+            }
+          },
+          "description": "The patient model and scene configuration shown during the simulation."
+        }
+      },
+      "description": "The location, preparation, equipment, and people needed to deliver the simulation."
+    },
+    "education": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "objectives",
+        "debrief"
+      ],
+      "properties": {
+        "objectives": {
+          "title": "Learning objectives",
+          "maxItems": 32,
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "title": "Learning objective",
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "title": "Learning objective",
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "id",
+                  "statement"
+                ],
+                "properties": {
+                  "id": {
+                    "title": "Identifier",
+                    "minLength": 1,
+                    "maxLength": 128,
+                    "pattern": "\\S",
+                    "type": "string",
+                    "description": "A stable objective identifier. Preserve it when editing or reordering the objective."
+                  },
+                  "statement": {
+                    "title": "Learning objective",
+                    "maxLength": 1000,
+                    "type": "string",
+                    "description": "An observable learning outcome, using an action verb such as recognize, assess, communicate, or initiate."
+                  },
+                  "acgmeCompetencies": {
+                    "title": "ACGME core competencies",
+                    "maxItems": 6,
+                    "uniqueItems": true,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "title": "ACGME core competency",
+                      "enum": [
+                        "PC",
+                        "MK",
+                        "PBLI",
+                        "ICS",
+                        "PROF",
+                        "SBP"
+                      ],
+                      "description": "One of the six ACGME core domain codes: PC, MK, PBLI, ICS, PROF, or SBP. Each code may appear only once per objective."
+                    },
+                    "description": "Optional author-selected ACGME core competency codes. Omitted or empty means unmapped. This is not a Milestone level or a judgment of competence. Do not infer mappings from source text that does not explicitly supply them."
+                  }
+                }
+              }
+            ],
+            "description": "One observable learning goal, using an action verb such as recognize, assess, communicate, or initiate."
+          },
+          "description": "The observable knowledge, skills, or behaviors learners should demonstrate."
+        },
+        "debrief": {
+          "title": "Debrief prompts",
+          "maxLength": 12000,
+          "type": "string",
+          "description": "Prompts for facilitated reflection after the scenario. Formatting is stored as Markdown."
+        },
+        "audience": {
+          "title": "Intended audience",
+          "maxLength": 8000,
+          "type": "string",
+          "description": "Who the scenario is designed for, including profession, training stage, and team composition."
+        },
+        "prerequisites": {
+          "title": "Prerequisites",
+          "maxLength": 8000,
+          "type": "string",
+          "description": "Rich-text instructions stored as Markdown for knowledge, skills, modules, or preparation learners should complete before starting."
+        },
+        "prerequisiteDocuments": {
+          "title": "Prerequisite documents",
+          "maxItems": 8,
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "id",
+              "name",
+              "dataUrl"
+            ],
+            "properties": {
+              "id": {
+                "title": "Identifier",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "Stable attachment identifier."
+              },
+              "name": {
+                "title": "Document name",
+                "maxLength": 255,
+                "type": "string",
+                "description": "Original document filename, including its extension."
+              },
+              "dataUrl": {
+                "title": "Document",
+                "maxLength": 6990668,
+                "pattern": "^data:(application/pdf|application/vnd\\.openxmlformats-officedocument\\.wordprocessingml\\.document|application/vnd\\.openxmlformats-officedocument\\.presentationml\\.presentation|text/plain|text/markdown);base64,[A-Za-z0-9+/]*={0,2}$",
+                "type": "string",
+                "description": "Uploaded document bytes stored as a data URL so the material travels with the scenario."
+              }
+            },
+            "description": "One preparation document with an identifier, filename, and embedded file content."
+          },
+          "description": "Downloadable learning materials attached by the author for learners to complete before starting. This does not track completion."
+        },
+        "rationale": {
+          "title": "Educational rationale",
+          "maxLength": 8000,
+          "type": "string",
+          "description": "Explain why this case is educationally useful and how its decisions and challenges support the learning objectives."
+        },
+        "assessment": {
+          "title": "Assessment & learning materials",
+          "maxItems": 64,
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "actionId",
+              "points",
+              "feedback"
+            ],
+            "properties": {
+              "objectiveId": {
+                "title": "Learning objective",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "Optional link to the stable ID of a structured learning objective. Multiple criteria may support one objective. No link means unspecified, never a failed objective."
+              },
+              "id": {
+                "title": "Identifier",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "A stable identifier used to reference this entry. Keep it unchanged when editing the entry's name or content."
+              },
+              "label": {
+                "title": "Skill or objective",
+                "maxLength": 1000,
+                "type": "string",
+                "minLength": 1,
+                "pattern": "\\S",
+                "description": "Name the observable skill or objective being assessed, such as recognizing deterioration."
+              },
+              "actionId": {
+                "title": "Required action",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "Select the learner action that earns credit for this criterion. Scheduled transitions cannot earn action credit."
+              },
+              "objectId": {
+                "title": "Equivalent resource",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "Single equivalent resource. Used when objectIds is omitted; the required action's linked resource is used when both are omitted."
+              },
+              "objectIds": {
+                "title": "Equivalent resources",
+                "minItems": 1,
+                "maxItems": 1000,
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                  "title": "Equivalent resource",
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "pattern": "\\S",
+                  "type": "string",
+                  "description": "The identifier of a learner-requestable resource accepted as an alternative for this assessment criterion."
+                },
+                "description": "Alternative learner-requestable resources that earn credit for this criterion. Any selected request qualifies, using the earliest request time regardless of result delay. Points are awarded once. Omit to use objectId or the required action's linked resource when present."
+              },
+              "points": {
+                "title": "Points",
+                "minimum": 1,
+                "maximum": 100,
+                "type": "number",
+                "description": "The weight of this criterion in the total score, from 1 to 100. Credit is awarded once when the criterion is met."
+              },
+              "withinSeconds": {
+                "title": "Deadline · seconds",
+                "minimum": 0,
+                "maximum": 86400,
+                "type": "number",
+                "description": "Latest qualifying action time in seconds from the start of the run, inclusive. Omit to assess the action without a deadline."
+              },
+              "feedback": {
+                "title": "Debrief guidance",
+                "maxLength": 8000,
+                "type": "string",
+                "description": "Explain the expected behavior, why it matters, and what to discuss when the action is completed or missed."
+              },
+              "learningUrl": {
+                "title": "Learning material URL",
+                "maxLength": 2000,
+                "pattern": "^https://[^\\s]+$",
+                "type": "string",
+                "description": "An HTTPS link to learning material relevant to this criterion, such as a guideline or teaching resource."
+              }
+            },
+            "description": "One scored criterion linking an observable skill to a recorded action, with points and debrief feedback."
+          },
+          "description": "The authored criteria used to assess learner performance."
+        }
+      },
+      "description": "Learning goals, learner preparation, assessment criteria, and guidance for reflection after the case."
+    },
+    "events": {
+      "additionalProperties": false,
+      "type": "object",
+      "required": [
+        "states",
+        "actions"
+      ],
+      "properties": {
+        "states": {
+          "title": "States",
+          "maxItems": 128,
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "id",
+              "title",
+              "kind",
+              "learnerNote",
+              "tutorNote"
+            ],
+            "properties": {
+              "id": {
+                "title": "Identifier",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "A stable identifier used to reference this entry. Keep it unchanged when editing the entry's name or content."
+              },
+              "title": {
+                "title": "State title",
+                "maxLength": 240,
+                "type": "string",
+                "description": "A short name for this phase, such as Initial assessment or Worsening respiratory distress."
+              },
+              "kind": {
+                "type": "string",
+                "title": "State kind",
+                "enum": [
+                  "baseline",
+                  "triggered",
+                  "scheduled",
+                  "conclusion"
+                ],
+                "description": "Baseline starts the case; triggered and scheduled describe intermediate phases; conclusion ends the run. A scheduled phase still needs an incoming timed interaction."
+              },
+              "learnerNote": {
+                "title": "Learner prompt",
+                "maxLength": 8000,
+                "type": "string",
+                "description": "Information presented to the learner at this phase: the patient's condition, new findings, or an immediate task. Keep tutor instructions and unrevealed answers in the tutor prompt."
+              },
+              "tutorNote": {
+                "title": "Tutor prompt",
+                "maxLength": 8000,
+                "type": "string",
+                "description": "Guide the tutor through this phase: expected learner actions, cues to offer if learners struggle, and when and why to advance. Include relevant reasoning and facilitation instructions."
+              },
+              "vitals": {
+                "title": "Vital signs",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "hr": {
+                    "title": "Heart rate · bpm",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Heart rate in beats per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "sbp": {
+                    "title": "Systolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Noninvasive systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "dbp": {
+                    "title": "Diastolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Noninvasive diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "rr": {
+                    "title": "Respiratory rate · /min",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Respiratory rate in breaths per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "spo2": {
+                    "title": "Oxygen saturation · %",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "number",
+                    "description": "Peripheral oxygen saturation as a percentage from 0 to 100. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "temperature": {
+                    "title": "Temperature · °C",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Body temperature in degrees Celsius. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "etco2": {
+                    "title": "End-tidal CO₂ · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "End-tidal carbon dioxide pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "artSbp": {
+                    "title": "Arterial systolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Invasive arterial systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "artDbp": {
+                    "title": "Arterial diastolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Invasive arterial diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  }
+                },
+                "description": "Absolute resulting measurements, never signed deltas. Omitted values are unspecified or inherited in an event context. Bounds are storage limits, not clinical reference intervals."
+              },
+              "vitalTrendSeconds": {
+                "title": "Vital trend · seconds",
+                "minimum": 0,
+                "maximum": 86400,
+                "type": "number",
+                "description": "Seconds over which the current vital values move to this state’s authored targets. Zero or omitted applies the targets immediately. The trend follows simulation time and pauses with the run."
+              },
+              "monitor": {
+                "title": "Monitor",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "rhythm": {
+                    "type": "string",
+                    "title": "Monitor rhythm",
+                    "enum": [
+                      "sinus",
+                      "sinus_tachycardia",
+                      "sinus_bradycardia",
+                      "atrial_fibrillation",
+                      "atrial_flutter",
+                      "svt",
+                      "ventricular_tachycardia",
+                      "torsades",
+                      "ventricular_fibrillation",
+                      "asystole",
+                      "av_block_1",
+                      "av_block_2_mobitz_1",
+                      "av_block_2_mobitz_2",
+                      "av_block_3",
+                      "junctional",
+                      "ventricular_paced"
+                    ],
+                    "description": "The ECG rhythm displayed on the monitor. Select the rhythm separately from whether the patient has a palpable pulse."
+                  },
+                  "pulsePresent": {
+                    "title": "Pulse present",
+                    "type": "boolean",
+                    "description": "Whether a palpable pulse is present. Use this to distinguish perfusing and pulseless presentations of the displayed rhythm."
+                  },
+                  "connections": {
+                    "title": "Monitor connections",
+                    "additionalProperties": false,
+                    "type": "object",
+                    "properties": {
+                      "ecg": {
+                        "title": "ECG",
+                        "type": "boolean",
+                        "description": "ECG: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      },
+                      "bloodPressure": {
+                        "title": "Blood pressure cuff",
+                        "type": "boolean",
+                        "description": "Blood pressure cuff: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      },
+                      "spo2": {
+                        "title": "Pulse oximetry",
+                        "type": "boolean",
+                        "description": "Pulse oximetry: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      },
+                      "respiration": {
+                        "title": "Respiratory monitoring",
+                        "type": "boolean",
+                        "description": "Respiratory monitoring: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      },
+                      "temperature": {
+                        "title": "Temperature probe",
+                        "type": "boolean",
+                        "description": "Temperature probe: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      },
+                      "capnography": {
+                        "title": "Capnography",
+                        "type": "boolean",
+                        "description": "Capnography: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      },
+                      "arterialPressure": {
+                        "title": "Arterial pressure",
+                        "type": "boolean",
+                        "description": "Arterial pressure: connected exposes the available measurement; disconnected hides it without changing physiology."
+                      }
+                    },
+                    "description": "Connected channels expose available measurements without changing physiology. An explicit empty patient connection map starts disconnected. Omitted event channels inherit their preceding connection. Omitting the patient connection map makes available channels connected."
+                  }
+                },
+                "description": "Monitor rhythm, pulse status, and channel connection overrides for this phase. Connection-only overrides preserve the preceding rhythm; omitted channels keep their preceding connection."
+              },
+              "key": {
+                "title": "Key state",
+                "type": "boolean",
+                "description": "Mark an educationally important phase. This does not award points or require every path to pass through the phase."
+              },
+              "resourceTrigger": {
+                "title": "Enter when resource results are available",
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "mode",
+                  "objectIds"
+                ],
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "title": "Results required",
+                    "enum": [
+                      "any",
+                      "all"
+                    ],
+                    "description": "All waits for every selected resource result; any enters on the first selected result. Requests alone do not satisfy the rule until their response delays elapse."
+                  },
+                  "objectIds": {
+                    "title": "Selected resources",
+                    "minItems": 1,
+                    "maxItems": 1000,
+                    "uniqueItems": true,
+                    "type": "array",
+                    "items": {
+                      "title": "Resource",
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string",
+                      "description": "The identifier of a learner-requestable resource required by this event result trigger."
+                    },
+                    "description": "Scenario resources whose completed results trigger this event. Select learner-requestable resources without a separate resource destination event."
+                  }
+                },
+                "description": "Enter this event once when selected learner-requested resource results become available. Incoming transitions remain alternative paths into the event."
+              }
+            },
+            "description": "One phase of the case, with learner information, tutor guidance, and any changed patient observations."
+          },
+          "description": "Patient phases in the scenario. Baseline contains starting conditions only. Newly authored milestones advance to distinct non-baseline phases even with unchanged vitals; do not return to baseline. Include exactly one baseline and at least one conclusion; connect phases with interactions."
+        },
+        "actions": {
+          "title": "Interactions",
+          "maxItems": 512,
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "id",
+              "label",
+              "from",
+              "to"
+            ],
+            "properties": {
+              "id": {
+                "title": "Identifier",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "A stable identifier used to reference this entry. Keep it unchanged when editing the entry's name or content."
+              },
+              "label": {
+                "title": "Interaction",
+                "maxLength": 1000,
+                "type": "string",
+                "description": "Use a short, observable action or timed-event label: 2–6 words, at most 48 characters. Put conditions, clinical detail, and what happens in description, not in the label. Do not append the destination state; from/to already identify it."
+              },
+              "description": {
+                "title": "Description",
+                "maxLength": 6000,
+                "type": "string",
+                "description": "Longer explanation of the action or timed event, its conditions, and what happens. Plain-language context only; executable behavior remains in the selected trigger, timing, resource references, and destination state. Text does not automatically detect learner behavior. Optional when the label provides sufficient context."
+              },
+              "from": {
+                "title": "From state",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "The phase in which this interaction is available or its scheduled timer begins."
+              },
+              "to": {
+                "title": "Leads to",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "The phase entered when this interaction occurs. Set scenario-specific vitals, rhythm, and patient information here; reusable treatment responses stay with resources. Destination vital signs override overlapping transition effects."
+              },
+              "trigger": {
+                "type": "string",
+                "title": "Trigger",
+                "enum": [
+                  "action",
+                  "scheduled"
+                ],
+                "description": "Action completes through AI interpretation of learner intent against its completion criterion, configured resource interactions, or explicit learner/facilitator confirmation. Scheduled runs once after its delay from the first source-state entry, remaining pending across later states unless canceled or the scenario concludes. Omitted means action."
+              },
+              "delaySeconds": {
+                "title": "Delay · seconds",
+                "minimum": 0,
+                "maximum": 86400,
+                "type": "number",
+                "description": "For a scheduled interaction, seconds after the source event first occurs. Multiple timers run independently and survive other events. Each fires once per run; re-entry does not restart it. This does not delay manual actions."
+              },
+              "objectId": {
+                "title": "Linked resource",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "deprecated": true,
+                "description": "Requests a resource when this transition fires. Builder authors resource links on the state under Results."
+              },
+              "completionCriteria": {
+                "title": "When this action is complete",
+                "maxLength": 6000,
+                "type": "string",
+                "description": "Describe the learner intent or behavior that fulfills this action. The AI interprets chat, conversation context, and simulator interactions against this criterion; equivalent wording is accepted. Distinguish an order from actual administration, and specify essential requirements. If omitted, the action label and description provide the criterion. Only available authored actions can advance the case; ambiguous intent requires clarification."
+              },
+              "completion": {
+                "title": "Action recognition",
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "mode",
+                  "objectIds"
+                ],
+                "properties": {
+                  "mode": {
+                    "type": "string",
+                    "title": "Resources required",
+                    "enum": [
+                      "any",
+                      "all"
+                    ],
+                    "description": "Choose whether any or all selected resource requests complete this action."
+                  },
+                  "objectIds": {
+                    "title": "Recognize resource interactions",
+                    "minItems": 1,
+                    "maxItems": 1000,
+                    "uniqueItems": true,
+                    "type": "array",
+                    "items": {
+                      "title": "Resource",
+                      "maxLength": 128,
+                      "minLength": 1,
+                      "pattern": "\\S",
+                      "type": "string",
+                      "description": "A learner-requestable resource used to recognize the action."
+                    },
+                    "description": "Select the resources that define the learner activity, such as BMP and CBC for Order labs. Only learner-requestable resources qualify. Automatic state releases do not count."
+                  }
+                },
+                "description": "Recognize this action from learner-requested resources while its source state is active. Any completes on the first selected request; all waits for all selected requests. Result delays do not delay action completion. Facilitators can confirm the same action directly. Confirming all requests every selected resource; confirming any does not guess which alternative was used. Omitted uses AI interpretation of completionCriteria (or label and description) or explicit confirmation."
+              },
+              "cancelOnActionIds": {
+                "title": "Cancel when action completes",
+                "maxItems": 1000,
+                "uniqueItems": true,
+                "type": "array",
+                "items": {
+                  "title": "Completed action",
+                  "maxLength": 128,
+                  "minLength": 1,
+                  "pattern": "\\S",
+                  "type": "string",
+                  "description": "A learner action whose completion prevents this scheduled transition from firing."
+                },
+                "description": "For a scheduled transition, completion of any selected action cancels this timer for the rest of the run, including after state re-entry. The action may stay in its current state. Selected unfinished actions stay available while this timer is pending once their source event has occurred, even after another event becomes current. Future-source actions remain unavailable. Completing the action enters its destination; a self-loop stays in the current event. Conclusion states do not allow recovery. Cancellation does not undo a deterioration that already occurred. The timer starts when the source event first occurs and remains pending when other events occur. Ending the scenario cancels pending timers."
+              },
+              "effects": {
+                "title": "Vital signs",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "hr": {
+                    "title": "Heart rate · bpm",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Heart rate in beats per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "sbp": {
+                    "title": "Systolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Noninvasive systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "dbp": {
+                    "title": "Diastolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Noninvasive diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "rr": {
+                    "title": "Respiratory rate · /min",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Respiratory rate in breaths per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "spo2": {
+                    "title": "Oxygen saturation · %",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "number",
+                    "description": "Peripheral oxygen saturation as a percentage from 0 to 100. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "temperature": {
+                    "title": "Temperature · °C",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Body temperature in degrees Celsius. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "etco2": {
+                    "title": "End-tidal CO₂ · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "End-tidal carbon dioxide pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "artSbp": {
+                    "title": "Arterial systolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Invasive arterial systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "artDbp": {
+                    "title": "Arterial diastolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Invasive arterial diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  }
+                },
+                "description": "Vital values applied during the transition. Builder authors patient changes on destination state vitals.",
+                "deprecated": true
+              }
+            },
+            "description": "One transition from a source phase to a destination, including its explicit learner choice or timer. Author resource links and patient changes on the destination state."
+          },
+          "description": "Connections between phases, activated by a learner action or a timer measured from entry into the source phase."
+        },
+        "objects": {
+          "title": "Resources",
+          "maxItems": 2048,
+          "type": "array",
+          "items": {
+            "additionalProperties": false,
+            "type": "object",
+            "required": [
+              "id",
+              "type",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "title": "Identifier",
+                "minLength": 1,
+                "maxLength": 128,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "A stable identifier used to reference this entry. Keep it unchanged when editing the entry's name or content."
+              },
+              "type": {
+                "type": "string",
+                "title": "Resource type",
+                "enum": [
+                  "medication",
+                  "diagnostic",
+                  "procedure",
+                  "equipment",
+                  "consultation",
+                  "information"
+                ],
+                "description": "Categorize the resource for selection and display. Choosing a type alone does not define its physiologic effects."
+              },
+              "name": {
+                "title": "Resource name",
+                "maxLength": 240,
+                "type": "string",
+                "description": "The name learners use to identify or request this resource. Include the dose or study details needed to distinguish similar choices."
+              },
+              "diagnosticCategory": {
+                "type": "string",
+                "title": "Diagnostic category",
+                "enum": [
+                  "lab",
+                  "imaging",
+                  "physiologic"
+                ],
+                "description": "Required only for diagnostic resources: lab for specimen-based tests, imaging for images and reports, or physiologic for recordings and functional measurements such as ECG, EEG, and spirometry."
+              },
+              "description": {
+                "title": "Description shown to the learner",
+                "maxLength": 8000,
+                "type": "string",
+                "description": "Optional context about the resource and why it is available. Leave blank when the name is sufficient. Put findings released after use in Learner result."
+              },
+              "result": {
+                "title": "Learner result",
+                "maxLength": 12000,
+                "type": "string",
+                "description": "Information shown when the resource response is released, such as a report, consultation advice, or procedure outcome. If empty, the description is shown instead."
+              },
+              "labResults": {
+                "title": "Lab results",
+                "maxItems": 64,
+                "type": "array",
+                "items": {
+                  "additionalProperties": false,
+                  "type": "object",
+                  "required": [
+                    "name",
+                    "value",
+                    "unit"
+                  ],
+                  "properties": {
+                    "name": {
+                      "title": "Test",
+                      "maxLength": 120,
+                      "type": "string",
+                      "description": "The test or analyte name, such as Hemoglobin."
+                    },
+                    "value": {
+                      "title": "Value",
+                      "maxLength": 80,
+                      "type": "string",
+                      "description": "The reported result as text, preserving decimals, inequalities, or qualitative values such as Negative."
+                    },
+                    "unit": {
+                      "title": "Unit",
+                      "maxLength": 80,
+                      "type": "string",
+                      "description": "The unit accompanying this result, such as g/dL or mmol/L. Leave empty for a unitless or qualitative result."
+                    }
+                  },
+                  "description": "One laboratory measurement, with its test name, reported value, and unit."
+                },
+                "description": "Structured test results shown before the result notes. Supply the fictional case's values and units; missing results are not inferred."
+              },
+              "image": {
+                "title": "Image",
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "dataUrl",
+                  "description"
+                ],
+                "properties": {
+                  "dataUrl": {
+                    "title": "Image",
+                    "maxLength": 12582912,
+                    "type": "string",
+                    "description": "The image encoded as a data URL so it travels with the scenario. Use the image upload control to populate it."
+                  },
+                  "description": {
+                    "title": "Image description",
+                    "maxLength": 1000,
+                    "type": "string",
+                    "description": "Describe the image and relevant visible findings for readers who cannot see it."
+                  }
+                },
+                "description": "An embedded image released with this resource, with a text description of its content."
+              },
+              "releaseOnStateId": {
+                "title": "Release result",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "Attach this result to a step. Diagnostics can also be requested individually; learner action completion does not deliver unrequested tests. Timed or facilitator event entry delivers linked results automatically. The response delay starts when the individual request or automatic delivery is recorded."
+              },
+              "delaySeconds": {
+                "title": "Response delay · seconds",
+                "minimum": 0,
+                "maximum": 86400,
+                "type": "number",
+                "description": "Seconds from the learner request or linked event until the response and its effects become available. Zero or omitted means immediate."
+              },
+              "effects": {
+                "title": "Vital signs",
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "hr": {
+                    "title": "Heart rate · bpm",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Heart rate in beats per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "sbp": {
+                    "title": "Systolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Noninvasive systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "dbp": {
+                    "title": "Diastolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Noninvasive diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "rr": {
+                    "title": "Respiratory rate · /min",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Respiratory rate in breaths per minute. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "spo2": {
+                    "title": "Oxygen saturation · %",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "number",
+                    "description": "Peripheral oxygen saturation as a percentage from 0 to 100. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "temperature": {
+                    "title": "Temperature · °C",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Body temperature in degrees Celsius. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "etco2": {
+                    "title": "End-tidal CO₂ · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "End-tidal carbon dioxide pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "artSbp": {
+                    "title": "Arterial systolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Invasive arterial systolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  },
+                  "artDbp": {
+                    "title": "Arterial diastolic BP · mmHg",
+                    "minimum": 0,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Invasive arterial diastolic blood pressure in mmHg. Enter the resulting measurement, not an amount of change; omit to leave it unspecified or retain the previous value during a transition."
+                  }
+                },
+                "description": "Absolute resulting measurements, never signed deltas. Omitted values are unspecified or inherited in an event context. Bounds are storage limits, not clinical reference intervals."
+              },
+              "advanceToStateId": {
+                "title": "Destination event",
+                "maxLength": 128,
+                "minLength": 1,
+                "pattern": "\\S",
+                "type": "string",
+                "description": "Enter this event when the resource response is released. Destination vitals replace resource effects; do not combine with effects or effectPercent."
+              },
+              "effectPercent": {
+                "additionalProperties": false,
+                "type": "object",
+                "properties": {
+                  "hr": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to heart rate in beats per minute. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "sbp": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to noninvasive systolic blood pressure in mmhg. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "dbp": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to noninvasive diastolic blood pressure in mmhg. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "rr": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to respiratory rate in breaths per minute. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "spo2": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to peripheral oxygen saturation as a percentage from 0 to 100. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "temperature": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to body temperature in degrees celsius. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "etco2": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to end-tidal carbon dioxide pressure in mmhg. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "artSbp": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to invasive arterial systolic blood pressure in mmhg. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  },
+                  "artDbp": {
+                    "minimum": -100,
+                    "maximum": 1000,
+                    "type": "number",
+                    "description": "Percentage change to invasive arterial diastolic blood pressure in mmhg. Applied once when the resource response arrives: -20 reduces the current value by 20%; 20 increases it by 20%. Omit to leave unchanged."
+                  }
+                },
+                "description": "Signed percentage changes applied once to current vitals at response time. Missing values stay unspecified. Mutually exclusive with effects and advanceToStateId."
+              },
+              "monitorConnection": {
+                "title": "Monitor connection",
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "channel",
+                  "connected"
+                ],
+                "properties": {
+                  "channel": {
+                    "type": "string",
+                    "title": "Monitor channel",
+                    "enum": [
+                      "ecg",
+                      "bloodPressure",
+                      "spo2",
+                      "respiration",
+                      "temperature",
+                      "capnography",
+                      "arterialPressure",
+                      "all",
+                      "standard"
+                    ],
+                    "description": "The monitor channel controlled by this equipment resource; all controls every channel; standard controls ECG, SpO2, NIBP, temperature, and respiratory rate."
+                  },
+                  "connected": {
+                    "title": "Connected",
+                    "type": "boolean",
+                    "description": "True connects this channel; false disconnects it."
+                  }
+                },
+                "description": "Connect or disconnect an equipment channel when this resource response is released."
+              },
+              "orthostaticResponse": {
+                "title": "Orthostatic BP response",
+                "additionalProperties": false,
+                "type": "object",
+                "required": [
+                  "systolicDrop",
+                  "diastolicDrop"
+                ],
+                "properties": {
+                  "systolicDrop": {
+                    "title": "Systolic drop · mmHg",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "number",
+                    "description": "Subtract this many mmHg from the request-time resting systolic BP for the standing result."
+                  },
+                  "diastolicDrop": {
+                    "title": "Diastolic drop · mmHg",
+                    "minimum": 0,
+                    "maximum": 100,
+                    "type": "number",
+                    "description": "Subtract this many mmHg from the request-time resting diastolic BP for the standing result."
+                  }
+                },
+                "description": "Report standing BP relative to current resting BP when requested, without changing resting physiology. An authored learner result takes precedence."
+              },
+              "medicationResponse": {
+                "type": "string",
+                "title": "Medication response preset",
+                "enum": [
+                  "fluid-250-v1",
+                  "fluid-500-v1",
+                  "fluid-1000-v1",
+                  "antipyretic-v1",
+                  "pressor-v1",
+                  "alpha-pressor-v1",
+                  "epinephrine-v1",
+                  "atropine-v1",
+                  "rate-control-v1",
+                  "beta-blocker-v1",
+                  "vasodilator-v1",
+                  "nitrate-v1",
+                  "sedative-v1",
+                  "propofol-sedation-v1",
+                  "propofol-induction-v1",
+                  "ketamine-analgesia-v1",
+                  "ketamine-induction-v1",
+                  "dexmedetomidine-v1"
+                ],
+                "description": "Versioned educational medication response, applied once to current vitals after the response delay. Requires a known patient age of at least 18 years. Do not combine with absolute, percentage or event responses. Exact changes are simulation assumptions; author condition-specific responses when needed."
+              },
+              "source": {
+                "title": "Source / attribution",
+                "maxLength": 2000,
+                "type": "string",
+                "description": "Credit the source of the resource content, including a citation or URL when available. Attribution alone does not verify clinical accuracy."
+              }
+            },
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "monitorConnection": {}
+                  },
+                  "required": [
+                    "monitorConnection"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "const": "equipment"
+                    }
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "orthostaticResponse": {}
+                  },
+                  "required": [
+                    "orthostaticResponse"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "const": "diagnostic"
+                    },
+                    "diagnosticCategory": {
+                      "const": "physiologic"
+                    }
+                  },
+                  "required": [
+                    "diagnosticCategory"
+                  ],
+                  "not": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "effects": {}
+                        },
+                        "required": [
+                          "effects"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "effectPercent": {}
+                        },
+                        "required": [
+                          "effectPercent"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "medicationResponse": {}
+                        },
+                        "required": [
+                          "medicationResponse"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "type": {
+                      "const": "diagnostic"
+                    }
+                  },
+                  "required": [
+                    "type"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "diagnosticCategory": {}
+                  },
+                  "required": [
+                    "diagnosticCategory"
+                  ]
+                },
+                "else": {
+                  "not": {
+                    "properties": {
+                      "diagnosticCategory": {}
+                    },
+                    "required": [
+                      "diagnosticCategory"
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "medicationResponse": {}
+                  },
+                  "required": [
+                    "medicationResponse"
+                  ]
+                },
+                "then": {
+                  "properties": {
+                    "type": {
+                      "const": "medication"
+                    }
+                  },
+                  "not": {
+                    "anyOf": [
+                      {
+                        "properties": {
+                          "effects": {}
+                        },
+                        "required": [
+                          "effects"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "effectPercent": {}
+                        },
+                        "required": [
+                          "effectPercent"
+                        ]
+                      },
+                      {
+                        "properties": {
+                          "advanceToStateId": {}
+                        },
+                        "required": [
+                          "advanceToStateId"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ],
+            "description": "One resource with learner-facing information, release timing, and any authored response or patient changes."
+          },
+          "description": "Medications, tests, procedures, and other resources available in the case. Each resource can be used once per run; use separate entries for repeat doses or serial results."
+        }
+      },
+      "description": "The patient phases, transitions, and requestable resources that define how the scenario progresses."
+    }
+  },
+  "description": "Suite implementation contract. Structural validation is generated from this schema; graph, reference, image, and execution rules also require domain validation. Distinct from portable-core usim-scenario 2.0."
+}
